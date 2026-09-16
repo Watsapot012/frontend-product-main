@@ -109,7 +109,7 @@ function App() {
     setEditingId(null);
   };
 
-  // คำนวณมูลค่าสินค้ารวมในระบบ
+ 
   const totalValue = products.reduce((acc, item) => acc + Number(item.price || 0), 0);
 
   return (
@@ -117,7 +117,7 @@ function App() {
       <main className="min-h-screen bg-[#090D16] font-sans antialiased text-slate-200 px-4 py-8 sm:px-6 lg:px-10">
         <div className="mx-auto max-w-7xl space-y-6">
           
-          {/* Header Banner - Dark Theme */}
+         
           <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-2xl bg-[#111827] p-6 border border-slate-800/80 shadow-2xl">
             <div className="flex items-center gap-4">
               <div className="flex size-12 items-center justify-center rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
@@ -138,7 +138,7 @@ function App() {
               </div>
             </div>
 
-            {/* Top Stat Pills */}
+           
             <div className="flex items-center gap-3">
               <div className="rounded-xl bg-[#1A2332] border border-slate-800 px-4 py-2 text-right">
                 <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">รายการทั้งหมด</span>
@@ -151,17 +151,17 @@ function App() {
             </div>
           </header>
 
-          {/* Error Alert */}
+        
           {error && (
             <div className="rounded-xl border border-rose-500/20 bg-rose-950/30 p-4 text-sm text-rose-400 flex items-center justify-between shadow-sm">
               <span>เกิดข้อผิดพลาด: {error}</span>
             </div>
           )}
 
-          {/* 2-Column Split Layout */}
+        
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            {/* Left Column: Form (Sticky on Large Screens) */}
+           
             <section className="lg:col-span-4 lg:sticky lg:top-8 rounded-2xl border border-slate-800/80 bg-[#111827] p-6 shadow-xl">
               <div className="flex items-center gap-2.5 border-b border-slate-800 pb-4 mb-5">
                 <div className="flex size-8 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
@@ -243,7 +243,7 @@ function App() {
               </form>
             </section>
 
-            {/* Right Column: Table / Product List */}
+           
             <section className="lg:col-span-8 rounded-2xl border border-slate-800/80 bg-[#111827] shadow-xl overflow-hidden">
               <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4">
                 <div className="flex items-center gap-2">
