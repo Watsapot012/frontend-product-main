@@ -111,196 +111,201 @@ function App() {
 
   return (
     <>
-      <main className="min-h-screen bg-base-200/50 px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl space-y-8">
+      <main className="min-h-screen bg-[#fafafa] font-sans antialiased text-slate-800 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl space-y-8">
           
-          {/* Header Banner */}
-          <header className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-primary/90 to-secondary p-6 text-primary-content shadow-2xl sm:p-10">
-            <div className="absolute -right-10 -top-10 size-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-            <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="grid size-12 place-items-center rounded-2xl bg-white/20 backdrop-blur-md ring-1 ring-white/30 shadow-inner">
-                    <Package className="size-6 text-white" />
-                  </div>
-                  <span className="badge badge-lg border-white/30 bg-white/15 backdrop-blur-md text-white font-medium">
-                    Product
+          {/* Header Banner - Minimal Clean Style */}
+          <header className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-2 rounded-full bg-emerald-500 ring-4 ring-emerald-50" />
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Product Management System
                   </span>
                 </div>
-                <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
-                  Product Management System
+                <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+                  ระบบจัดการรายการสินค้า
                 </h1>
-                <p className="mt-2.5 max-w-xl text-sm font-light text-primary-content/80 sm:text-base">
-                  จัดการสินค้าและราคาได้อย่างรวดเร็วและเป็นระเบียบในที่เดียว
+                <p className="text-sm text-slate-500">
+                  จัดการข้อมูลสินค้าและราคาสินค้าในระบบแบบเรียลไทม์
                 </p>
+              </div>
+
+              <div className="hidden sm:flex size-11 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 text-slate-600">
+                <Package className="size-5 stroke-[1.75]" />
               </div>
             </div>
           </header>
 
-          {/* Form Section */}
-          <section className="card border border-base-200 bg-base-100/80 backdrop-blur-md shadow-xl transition-all duration-300 hover:shadow-2xl">
-            <div className="card-body p-6 sm:p-8">
-              <div className="mb-4 flex items-center gap-3 border-b border-base-200 pb-4">
-                <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
-                  <PlusCircle className="size-6" />
+          {/* Form Section - Minimal Form Box */}
+          <section className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-sm">
+            <div className="mb-6 flex items-center justify-between border-b border-slate-100 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="flex size-9 items-center justify-center rounded-lg bg-slate-900 text-white">
+                  {editingId ? <Pencil className="size-4 stroke-[1.75]" /> : <PlusCircle className="size-4 stroke-[1.75]" />}
                 </div>
                 <div>
-                  <h2 className="card-title text-xl font-bold">
+                  <h2 className="text-base font-semibold text-slate-900">
                     {editingId ? "แก้ไขข้อมูลสินค้า" : "เพิ่มสินค้าใหม่"}
                   </h2>
-                  <p className="text-xs text-base-content/60 sm:text-sm">
-                    {editingId ? "กรอกข้อมูลใหม่เพื่ออัปเดตรายการสินค้า" : "กรอกข้อมูลเพื่อเพิ่มรายการเข้าสู่ระบบ"}
+                  <p className="text-xs text-slate-500">
+                    {editingId ? "ระบุข้อมูลใหม่ที่ต้องการแก้ไข" : "ป้อนรายละเอียดสินค้าที่ต้องการเพิ่ม"}
                   </p>
                 </div>
               </div>
+            </div>
 
-              <form
-                className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_0.65fr_auto] md:items-end"
-                onSubmit={editingId ? handleUpdateProduct : handleCreateProduct}
-              >
-                <label className="form-control w-full">
-                  <span className="label-text mb-1.5 font-semibold text-base-content/80">ชื่อสินค้า</span>
-                  <input
-                    className="input input-bordered w-full focus:input-primary transition-all duration-200"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="เช่น Gaming Keyboard"
-                  />
+            <form
+              className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_0.6fr_auto] md:items-end"
+              onSubmit={editingId ? handleUpdateProduct : handleCreateProduct}
+            >
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium uppercase tracking-wider text-slate-500">
+                  ชื่อสินค้า
                 </label>
+                <input
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-sm text-slate-900 transition-all focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="เช่น Gaming Keyboard"
+                />
+              </div>
 
-                <label className="form-control w-full">
-                  <span className="label-text mb-1.5 font-semibold text-base-content/80">ราคา (บาท)</span>
-                  <input
-                    className="input input-bordered w-full focus:input-primary transition-all duration-200"
-                    type="number"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    placeholder="เช่น 1500"
-                  />
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium uppercase tracking-wider text-slate-500">
+                  ราคา (บาท)
                 </label>
+                <input
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-sm text-slate-900 transition-all focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900"
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  placeholder="เช่น 1500"
+                />
+              </div>
 
-                <div className="flex gap-2 w-full md:w-auto">
-                  <button
-                    className="btn btn-primary flex-1 md:flex-none shadow-md shadow-primary/20 hover:shadow-lg transition-all"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <span className="loading loading-spinner loading-sm" />
-                    ) : editingId ? (
-                      <Pencil className="size-4" />
-                    ) : (
-                      <PlusCircle className="size-4" />
-                    )}
+              <div className="flex gap-2 pt-2 md:pt-0">
+                <button
+                  className="flex h-[42px] flex-1 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 text-sm font-medium text-white transition-all hover:bg-slate-800 disabled:bg-slate-300 md:flex-none"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span className="loading loading-spinner loading-xs" />
+                  ) : editingId ? (
+                    <Pencil className="size-4 stroke-[1.75]" />
+                  ) : (
+                    <PlusCircle className="size-4 stroke-[1.75]" />
+                  )}
 
+                  <span>
                     {isSubmitting
                       ? "กำลังบันทึก..."
                       : editingId
-                        ? "บันทึกการแก้ไข"
-                        : "บันทึกข้อมูล"}
-                  </button>
+                        ? "อัปเดต"
+                        : "เพิ่มสินค้า"}
+                  </span>
+                </button>
 
-                  {editingId && (
-                    <button
-                      className="btn btn-ghost border border-base-300 hover:bg-base-200"
-                      type="button"
-                      onClick={cancelEditing}
-                      disabled={isSubmitting}
-                    >
-                      <X className="size-4" /> ยกเลิก
-                    </button>
-                  )}
-                </div>
-              </form>
-            </div>
+                {editingId && (
+                  <button
+                    className="flex h-[42px] items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-600 transition-all hover:bg-slate-50"
+                    type="button"
+                    onClick={cancelEditing}
+                    disabled={isSubmitting}
+                  >
+                    <X className="size-4 stroke-[1.75]" />
+                    <span>ยกเลิก</span>
+                  </button>
+                )}
+              </div>
+            </form>
           </section>
 
           {/* Error Alert */}
           {error && (
-            <div className="alert alert-error shadow-lg border border-error/20">
-              <span className="font-medium">เกิดข้อผิดพลาด : {error} </span>
+            <div className="rounded-xl border border-rose-100 bg-rose-50/60 p-4 text-sm text-rose-600">
+              <span>เกิดข้อผิดพลาด: {error}</span>
             </div>
           )}
 
-          {/* Product Content States */}
+          {/* Table / Empty State */}
           {loading ? (
-            <div className="flex min-h-60 flex-col gap-3 items-center justify-center rounded-3xl border border-base-200 bg-base-100 shadow-sm">
-              <span className="loading loading-dots loading-lg text-primary" />
-              <span className="text-sm font-medium text-base-content/60">กำลังโหลดข้อมูล...</span>
+            <div className="flex h-48 flex-col items-center justify-center gap-2 rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+              <span className="loading loading-spinner loading-md text-slate-400" />
+              <span className="text-xs font-medium text-slate-400">กำลังโหลดรายการ...</span>
             </div>
           ) : products.length === 0 ? (
-            <div className="card border-2 border-dashed border-base-300 bg-base-100/50 shadow-sm">
-              <div className="card-body items-center py-16 text-center">
-                <div className="rounded-full bg-base-200 p-4 mb-2">
-                  <Package className="size-10 text-base-content/40" />
-                </div>
-                <h2 className="card-title text-xl font-bold">ยังไม่มีข้อมูลสินค้า</h2>
-                <p className="text-sm text-base-content/60 max-w-xs">
-                  เริ่มต้นด้วยการกรอกแบบฟอร์มด้านบนเพื่อเพิ่มสินค้าใหม่รายการแรกของคุณ
-                </p>
+            <div className="rounded-2xl border border-dashed border-slate-200 bg-white p-12 text-center">
+              <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-slate-50 text-slate-400 mb-3">
+                <Package className="size-6 stroke-[1.5]" />
               </div>
+              <p className="text-sm font-medium text-slate-900">ไม่มีรายการสินค้าในระบบ</p>
+              <p className="text-xs text-slate-400 mt-1">เริ่มต้นเพิ่มรายการสินค้าแรกโดยใช้แบบฟอร์มด้านบน</p>
             </div>
           ) : (
-            <section className="card border border-base-200 bg-base-100 shadow-xl overflow-hidden">
-              <div className="card-body p-0">
-                <div className="flex items-center justify-between border-b border-base-200 px-6 py-5 sm:px-8">
-                  <div>
-                    <h2 className="card-title text-xl font-bold">รายการสินค้าทั้งหมด</h2>
-                    <p className="text-xs text-base-content/60 sm:text-sm">
-                      มีสินค้าอยู่ในระบบ {products.length} รายการ
-                    </p>
-                  </div>
-                  <span className="badge badge-primary badge-lg font-bold shadow-sm">
+            <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+              <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-semibold text-slate-900">รายการสินค้าทั้งหมด</h2>
+                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
                     {products.length}
                   </span>
                 </div>
+              </div>
 
-                <div className="overflow-x-auto">
-                  <table className="table table-zebra w-full">
-                    <thead className="bg-base-200/60 text-xs font-semibold uppercase tracking-wider text-base-content/70">
-                      <tr>
-                        <th className="py-4 pl-6 sm:pl-8">รหัส</th>
-                        <th className="py-4">สินค้า</th>
-                        <th className="py-4">ราคา</th>
-                        <th className="py-4 pr-6 text-right sm:pr-8">การจัดการ</th>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-slate-50/70 border-b border-slate-100 text-xs font-medium uppercase tracking-wider text-slate-400">
+                    <tr>
+                      <th className="py-3.5 pl-6">รหัส</th>
+                      <th className="py-3.5">ชื่อสินค้า</th>
+                      <th className="py-3.5">ราคา</th>
+                      <th className="py-3.5 pr-6 text-right">การจัดการ</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {products.map((item) => (
+                      <tr key={item.id} className="group transition-colors hover:bg-slate-50/60">
+                        <td className="py-4 pl-6 font-mono text-xs font-medium text-slate-400">
+                          #{item.id}
+                        </td>
+                        <td className="py-4 font-medium text-slate-800">
+                          {item.name}
+                        </td>
+                        <td className="py-4">
+                          <span className={`inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-semibold ${
+                            Number(item.price) > 5000 
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200/60' 
+                              : 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
+                          }`}>
+                            {Number(item.price).toLocaleString()} ฿
+                          </span>
+                        </td>
+                        <td className="py-4 pr-6 text-right">
+                          <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100">
+                            <button
+                              className="flex size-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-all"
+                              onClick={() => startEditing(item)}
+                              aria-label={`แก้ไขสินค้า ${item.name}`}
+                            >
+                              <Pencil className="size-4 stroke-[1.75]" />
+                            </button>
+                            <button
+                              className="flex size-8 items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition-all"
+                              onClick={() => handleDeleteProduct(item.id)}
+                              aria-label={`ลบสินค้า ${item.name}`}
+                            >
+                              <Trash2 className="size-4 stroke-[1.75]" />
+                            </button>
+                          </div>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody className="divide-y divide-base-200">
-                      {products.map((item) => (
-                        <tr key={item.id} className="hover:bg-base-200/40 transition-colors">
-                          <td className="pl-6 font-mono text-xs font-semibold text-base-content/50 sm:pl-8">
-                            #{item.id}
-                          </td>
-                          <td className="font-semibold text-base-content/90">{item.name}</td>
-                          <td>
-                            <span className="inline-flex items-center rounded-full bg-success/10 px-3 py-1 text-sm font-bold text-success">
-                              {Number(item.price).toLocaleString()} ฿
-                            </span>
-                          </td>
-                          <td className="pr-6 text-right sm:pr-8">
-                            <div className="flex items-center justify-end gap-1">
-                              <button
-                                className="btn btn-square btn-ghost btn-sm text-primary hover:bg-primary/10 transition-colors"
-                                onClick={() => startEditing(item)}
-                                aria-label={`แก้ไขสินค้า ${item.name}`}
-                              >
-                                <Pencil className="size-4" />
-                              </button>
-                              <button
-                                className="btn btn-square btn-ghost btn-sm text-error hover:bg-error/10 transition-colors"
-                                onClick={() => handleDeleteProduct(item.id)}
-                                aria-label={`ลบสินค้า ${item.name}`}
-                              >
-                                <Trash2 className="size-4" />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </section>
           )}
