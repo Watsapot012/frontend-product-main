@@ -19,7 +19,7 @@ function App() {
       const response = await fetch(API_URL);
       if(!response.ok) throw new Error("ไม่สามารถดึงข้อมูลได้")
       const data = await response.json();
-    setProducts(data);
+      setProducts(data);
     } catch (error) {
       setError(error.message);
     }finally{
@@ -106,170 +106,195 @@ function App() {
   const cancelEditing = () => {
     setName("");
     setPrice("");
+    setEditingId(null);
   };
 
   return (
     <>
-      <main className="min-h-screen px-4 py-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl space-y-6 ">
-          <header className="hero-panel rounded-box px-5 py-7 text-primary-content shadow-xl sm:px-8 ">
-            <div className="flex flex-col gap-6 sm:flex-row sm:item-end sm:justify-between">
+      <main className="min-h-screen bg-base-200/50 px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl space-y-8">
+          
+          {/* Header Banner */}
+          <header className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-primary/90 to-secondary p-6 text-primary-content shadow-2xl sm:p-10">
+            <div className="absolute -right-10 -top-10 size-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
+            <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <div className="mb-3 flex items-center gap-3">
-                  <div className="grid size-12 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/15">
-                    <Package className="size-7"></Package>
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="grid size-12 place-items-center rounded-2xl bg-white/20 backdrop-blur-md ring-1 ring-white/30 shadow-inner">
+                    <Package className="size-6 text-white" />
                   </div>
-                  <span className="badge badge-outline border-white/40 text-white">
+                  <span className="badge badge-lg border-white/30 bg-white/15 backdrop-blur-md text-white font-medium">
                     Product
                   </span>
                 </div>
-                <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
                   Product Management System
                 </h1>
-                <p className="mt-2 max-w-xl text-sm text-primary-content/75 sm:text-base">
-                  จัดการสินค้าและราคาได้อย่างรวดเร็วในที่เดียว
+                <p className="mt-2.5 max-w-xl text-sm font-light text-primary-content/80 sm:text-base">
+                  จัดการสินค้าและราคาได้อย่างรวดเร็วและเป็นระเบียบในที่เดียว
                 </p>
               </div>
             </div>
           </header>
-          <section className="card border border-base-300 bg-base-100 shadow-sm">
-            <div className="card=body p-5 sm:p-6">
-              <div className="mb-2 flex items-center gap-3">
-                <div className="rounded-xl bg-primary/10 p-2 text-primary">
-                  <PlusCircle className="size-5" />
+
+          {/* Form Section */}
+          <section className="card border border-base-200 bg-base-100/80 backdrop-blur-md shadow-xl transition-all duration-300 hover:shadow-2xl">
+            <div className="card-body p-6 sm:p-8">
+              <div className="mb-4 flex items-center gap-3 border-b border-base-200 pb-4">
+                <div className="rounded-xl bg-primary/10 p-2.5 text-primary">
+                  <PlusCircle className="size-6" />
                 </div>
                 <div>
-                  <h2 className="card-title text-xl">เพิ่มสินค้าใหม่</h2>
-                  <p className="text-sm text-base-content/60">
-                    กรอกข้อมูลเพื่อเพิ่มรายการเข้าสู่ระบบ
+                  <h2 className="card-title text-xl font-bold">
+                    {editingId ? "แก้ไขข้อมูลสินค้า" : "เพิ่มสินค้าใหม่"}
+                  </h2>
+                  <p className="text-xs text-base-content/60 sm:text-sm">
+                    {editingId ? "กรอกข้อมูลใหม่เพื่ออัปเดตรายการสินค้า" : "กรอกข้อมูลเพื่อเพิ่มรายการเข้าสู่ระบบ"}
                   </p>
                 </div>
               </div>
-            </div>
-            <form
-              className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-[1fr_0.65fr_auto] md:items-end"
-              onSubmit={editingId ? handleUpdateProduct : handleCreateProduct}
-            >
-              <label className="form-control w-full">
-                <span className="label-text mb-2 font-medium">ชื่อสินค้า</span>
-                <input
-                  className="input input-bordered w-full"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="เช่น Gamming keyboard"
-                />
-              </label>
-              <label className="form-control w-full">
-                <span className="label-text mb-2 font-medium">ราคา (บาท)</span>
-                <input
-                  className="input input-bordered w-full"
-                  type="text"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  placeholder="เช่น 1500"
-                />
-              </label>
-              <button
-                className="btn btn-primary w-full md:w-auto"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <span className="loading loading-spinner loading-sm" />
-                ) : editingId ? (
-                  <Pencil className="size-4" />
-                ) : (
-                  <PlusCircle className="size-4" />
-                )}
 
-                {isSubmitting
-                  ? "กำลังบันทึก..."
-                  : editingId
-                    ? "บันทึกการแก้ไข"
-                    : "บันทึกข้อมูล"}
-              </button>
-              {editingId && (
-                <button
-                  className="btn btn-ghost w-full md:w-auto"
-                  type="button"
-                  onClick={cancelEditing}
-                  disabled={isSubmitting}
-                >
-                  <X className="size-4" /> ยกเลิก
-                </button>
-              )}
-            </form>
+              <form
+                className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_0.65fr_auto] md:items-end"
+                onSubmit={editingId ? handleUpdateProduct : handleCreateProduct}
+              >
+                <label className="form-control w-full">
+                  <span className="label-text mb-1.5 font-semibold text-base-content/80">ชื่อสินค้า</span>
+                  <input
+                    className="input input-bordered w-full focus:input-primary transition-all duration-200"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="เช่น Gaming Keyboard"
+                  />
+                </label>
+
+                <label className="form-control w-full">
+                  <span className="label-text mb-1.5 font-semibold text-base-content/80">ราคา (บาท)</span>
+                  <input
+                    className="input input-bordered w-full focus:input-primary transition-all duration-200"
+                    type="number"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    placeholder="เช่น 1500"
+                  />
+                </label>
+
+                <div className="flex gap-2 w-full md:w-auto">
+                  <button
+                    className="btn btn-primary flex-1 md:flex-none shadow-md shadow-primary/20 hover:shadow-lg transition-all"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="loading loading-spinner loading-sm" />
+                    ) : editingId ? (
+                      <Pencil className="size-4" />
+                    ) : (
+                      <PlusCircle className="size-4" />
+                    )}
+
+                    {isSubmitting
+                      ? "กำลังบันทึก..."
+                      : editingId
+                        ? "บันทึกการแก้ไข"
+                        : "บันทึกข้อมูล"}
+                  </button>
+
+                  {editingId && (
+                    <button
+                      className="btn btn-ghost border border-base-300 hover:bg-base-200"
+                      type="button"
+                      onClick={cancelEditing}
+                      disabled={isSubmitting}
+                    >
+                      <X className="size-4" /> ยกเลิก
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
           </section>
+
+          {/* Error Alert */}
           {error && (
-            <div className="alert alert-error shadow-sm">
-              <span>เกิดข้อผิดพลาด : {error} </span>
+            <div className="alert alert-error shadow-lg border border-error/20">
+              <span className="font-medium">เกิดข้อผิดพลาด : {error} </span>
             </div>
           )}
+
+          {/* Product Content States */}
           {loading ? (
-            <div className="flex min-h-48 items-center justify-center rounded-box border border-base-300 bg-base-100 shadow-sm">
+            <div className="flex min-h-60 flex-col gap-3 items-center justify-center rounded-3xl border border-base-200 bg-base-100 shadow-sm">
               <span className="loading loading-dots loading-lg text-primary" />
-              <span className="sr-only">กำลังโหลดข้อมูล...</span>
+              <span className="text-sm font-medium text-base-content/60">กำลังโหลดข้อมูล...</span>
             </div>
           ) : products.length === 0 ? (
-            <div className="card border border-dashed border-base-300 bg-base-100 shadow-sm">
-              <div className="card-body items-center py-14 text-center">
-                <Package className="size-12 text-base-content/25 " />
-                <h2 className="card-title mt-2">ยังไม่มีข้อมูลสินค้า</h2>
-                <p className="text-sm text-base-content/60">
-                  เริ่มต้นด้วยการเพิ่มสินค้าใหม่ด้านบน
+            <div className="card border-2 border-dashed border-base-300 bg-base-100/50 shadow-sm">
+              <div className="card-body items-center py-16 text-center">
+                <div className="rounded-full bg-base-200 p-4 mb-2">
+                  <Package className="size-10 text-base-content/40" />
+                </div>
+                <h2 className="card-title text-xl font-bold">ยังไม่มีข้อมูลสินค้า</h2>
+                <p className="text-sm text-base-content/60 max-w-xs">
+                  เริ่มต้นด้วยการกรอกแบบฟอร์มด้านบนเพื่อเพิ่มสินค้าใหม่รายการแรกของคุณ
                 </p>
               </div>
             </div>
           ) : (
-            <section className="card border border-base-300 bg-base-100 shadow-sm">
+            <section className="card border border-base-200 bg-base-100 shadow-xl overflow-hidden">
               <div className="card-body p-0">
-                <div className="flex items-center justify-between px-5 py-5 sm:px-6">
+                <div className="flex items-center justify-between border-b border-base-200 px-6 py-5 sm:px-8">
                   <div>
-                    <h2 className="card-title">รายการสินค้าทั้งหมด</h2>
-                    <p className="text-sm text-base-content/60">
-                      มีสินค้า {products.length} รายการ
+                    <h2 className="card-title text-xl font-bold">รายการสินค้าทั้งหมด</h2>
+                    <p className="text-xs text-base-content/60 sm:text-sm">
+                      มีสินค้าอยู่ในระบบ {products.length} รายการ
                     </p>
                   </div>
-                  <span className="badge badge-primary badge-lg">
+                  <span className="badge badge-primary badge-lg font-bold shadow-sm">
                     {products.length}
                   </span>
                 </div>
-                <div className="overflow-auto">
-                  <table className="table table-zebra">
-                    <thead>
+
+                <div className="overflow-x-auto">
+                  <table className="table table-zebra w-full">
+                    <thead className="bg-base-200/60 text-xs font-semibold uppercase tracking-wider text-base-content/70">
                       <tr>
-                        <th>รหัส</th>
-                        <th>สินค้า</th>
-                        <th>ราคา</th>
-                        <th className="table-right">การจัดการ</th>
+                        <th className="py-4 pl-6 sm:pl-8">รหัส</th>
+                        <th className="py-4">สินค้า</th>
+                        <th className="py-4">ราคา</th>
+                        <th className="py-4 pr-6 text-right sm:pr-8">การจัดการ</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-base-200">
                       {products.map((item) => (
-                        <tr key={item.id}>
-                          <td className="font-mono text-xs text-base-content/50">
+                        <tr key={item.id} className="hover:bg-base-200/40 transition-colors">
+                          <td className="pl-6 font-mono text-xs font-semibold text-base-content/50 sm:pl-8">
                             #{item.id}
                           </td>
-                          <td className="font-medium">{item.name}</td>
-                          <td className="font-bold text-success">
-                            {Number(item.price).toLocaleString()}฿
+                          <td className="font-semibold text-base-content/90">{item.name}</td>
+                          <td>
+                            <span className="inline-flex items-center rounded-full bg-success/10 px-3 py-1 text-sm font-bold text-success">
+                              {Number(item.price).toLocaleString()} ฿
+                            </span>
                           </td>
-                          <td className="text-right">
-                            <button
-                              className="btn btn-square btn-ghost btn-sm text-primary hover:bg-primary/10"
-                              onClick={() => startEditing(item)}
-                              aria-label={`แก้ไขสินค้า ${item.name}`}
-                            >
-                              <Pencil className="size-4" />
-                            </button>
-                            <button
-                              className="btn btn-square btn-ghost btn-sm text-error hover:bg-primary/10"
-                              onClick={() => handleDeleteProduct(item.id)}
-                              aria-label="`ลบสินค้า${item.name}`"
-                            >
-                              <Trash2 className="size-4" />
-                            </button>
+                          <td className="pr-6 text-right sm:pr-8">
+                            <div className="flex items-center justify-end gap-1">
+                              <button
+                                className="btn btn-square btn-ghost btn-sm text-primary hover:bg-primary/10 transition-colors"
+                                onClick={() => startEditing(item)}
+                                aria-label={`แก้ไขสินค้า ${item.name}`}
+                              >
+                                <Pencil className="size-4" />
+                              </button>
+                              <button
+                                className="btn btn-square btn-ghost btn-sm text-error hover:bg-error/10 transition-colors"
+                                onClick={() => handleDeleteProduct(item.id)}
+                                aria-label={`ลบสินค้า ${item.name}`}
+                              >
+                                <Trash2 className="size-4" />
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -279,7 +304,7 @@ function App() {
               </div>
             </section>
           )}
-          <section>Product List</section>
+
         </div>
       </main>
     </>
